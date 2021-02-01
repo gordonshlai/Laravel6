@@ -17,10 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test', [
-        'name' => request('name')
+Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
+
+Route::get('/about', function () {
+    return view('about', [
+        'articles' => App\Models\Article::take(3)->latest()->get()
     ]);
 });
 
-Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
+Route::get('/articles', 'App\Http\Controllers\ArticlesController@index');
+Route::get('/articles/{article}', 'App\Http\Controllers\ArticlesController@show');
